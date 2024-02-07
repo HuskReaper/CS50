@@ -6,8 +6,9 @@
     
     <body>
         <h1>Hello, world!</h1>
-        <a href="http://127.0.0.1:8000/hello/request">Request Example</a> <br>
-        <a href="http://127.0.0.1:8000/hello/example">HTTPResponse Example</a> <br>
-        <a href="http://127.0.0.1:8000/hello/user">Greeting Example (Can change "user" to a different name)</a>
+        <a href="{% url 'hello:request' %}">Request Example</a> <br>
+        <a href="{% url 'hello:example' %}">HTTPResponse Example</a> <br>
+        <a href="{% url 'newyear:index' %}">Is today a new year?</a> <br>
+        <a href="{% url 'tasks:index' %}">Tasks App</a>
     </body>
 </html>

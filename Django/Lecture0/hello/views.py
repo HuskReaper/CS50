@@ -10,6 +10,3 @@ def request(request):
 
 def example(request):
     return HttpResponse("This is an example of a HTTPResponse in django.")
-
-def greet(request, name):
-    return HttpResponse(f"Hello, {name.capitalize()}!")
