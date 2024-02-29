@@ -1,0 +1,123 @@
+/* Setting link to be in top-right corner and separated 10px from each other. */
+.g-navbar {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.g-link {
+    margin: 10px;
+}
+
+/* Centering google's logo and styling search bar elements.*/
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-input {
+    display: flex;
+    background-color: #fff;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    margin: 0 auto;
+    height: 44px;
+    width: 561px;
+    margin-top: 35px;
+}
+
+.button {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    margin-top: 20px;
+    margin-right: 10px;
+}
+
+/* Setting "a" elements to only be displayed in black color and without underlining. */
+a:link {
+    color: black;
+    text-decoration: none;
+}
+
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+/* Styling advanced search page. */
+.advanced-title {
+    margin-top: 35px;
+    margin-left: 35px;
+    margin-bottom: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: #df5047;
+}
+
+.divider {
+    border-bottom: 1px solid #ebebeb;
+}
+
+.find-with {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #333333;
+}
+
+.options-div {
+    margin: 40px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.advanced-text {
+    width: 167px;
+}
+
+.advanced-input {
+    border-radius: 1px;
+    border: 1px solid #d9d9d9;
+    border-top: 1px solid #c0c0c0;
+    font-size: 13px;
+    height: 25px;
+    width: 345px;
+    padding: 1px 8px;
+}
+
+.div-button {
+    display: flex;
+    justify-content: flex-end;
+    width: 530px;
+}
+
+.advanced-button {
+    background-color: #4d90fe;
+    box-shadow: none;
+    border: 1px solid #3079ed;
+    color: #fff;
+    border-radius: 2px;
+    width: 132px;
+    height: 30px;
+    margin: 10px 0px;
+    padding: 0px 12px;
+}
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}
