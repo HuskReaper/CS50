@@ -1,0 +1,83 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+   
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="text-center">
+            {% if not data.active %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>This auction is closed.</strong>
+                </div>
+            {% endif %}
+            {% if not data.active and user == data.current_bidder %}
+                <div class="alert alert-success" role="alert">
+                    <strong>Congratulations! You won this auction.</strong>
+                </div>
+            {% endif %}  
+
+            <img src="{{ data.image_url }}" alt="Listing Image" style="max-width: 400px; max-height: 400px;">
+            <h2><strong>{{ data.name }}</strong></h2>
+            <p>{{ data.description }}</p>
+            <p>Auction by <strong>{{ data.owner }}</strong></p>
+            <strong><p>Active: {{ data.active }}</p></strong>
+
+            {% if message %}
+                <strong>{{message}}</strong>
+            {% endif %}
+
+            <div class="p-3" style="border: 3px dashed green; border-radius: 5px;">
+                {% if data.current_bidder == None %}
+                    <p>Starting Bid: ${{ data.price }}</p>
+                {% else %}
+                    <p>Current Bid: ${{ data.price }} by {{ data.current_bidder }}</p>
+                {% endif %}
+
+                <p>Bid on this listing:</p>
+                <div>
+                    {% csrf_token %}
+                    <div class="row">
+                        <form action="{% url 'place_bid' id=data.id %}" method="POST">
+                            {% csrf_token %}
+                            <input class="form-control mb-3" type="number" name="bid" placeholder="Bid" min="0">
+                            <input class="btn btn-primary mb-3" type="submit" value="Place Bid">
+                        </form>
+
+                        {% if in_watchlist %}
+                            <form action="{% url 'watchlist_remove' id=data.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" value="remove" name="option">
+                                <input class="btn btn-danger mb-3" type="submit" value="Remove from Watchlist"></input>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'watchlist_add' id=data.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" value="add" name="option">
+                                <input class="btn btn-success mb-3" type="submit" value="Add to Watchlist"></input>
+                            </form>
+                        {% endif %}
+
+                        {% if user == data.owner %}
+                            <form action="{% url 'close_auction' id=data.id %}" method="POST">
+                                {% csrf_token %}
+                                <input class="btn btn-danger" type="submit" value="Close auction">
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="mb-3">
+                <h3>Comments</h3>
+                <form class="form-control" method="POST" action="{% url 'add_comment' id=data.id %}">
+                    {% csrf_token %}
+                    <input class="form-control mb-3" type="text" name="message" placeholder="Write something!">
+                    <input class="btn btn-success" type="submit" value="Place Comment">
+                </form>
+                {% for comment in comments %}
+                    <p><strong>{{ comment.author }}</strong>: {{ comment.text }} </p>
+                {% endfor %} 
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

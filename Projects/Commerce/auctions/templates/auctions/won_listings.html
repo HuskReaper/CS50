@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Won Listings</h2>
+
+    <div class="row mx-3">
+        <form action="{% url 'index' %}" method="POST">
+            {% csrf_token %}
+            <select class="form-select form-select-sm mb-3" name="category">
+                <option disabled selected>Filter Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Search" class="btn btn-success">
+        </form>
+    </div>
+
+    <br>
+
+    <div class="row mx-3">
+        {% for listing in all_listings %}
+            <div class="card mx-3" style="width: 18rem;">
+                <img src="{{ listing.image_url }}" class="card-img-top" alt="Listing Image">
+                    <div class="card-body">
+                    <h5 class="card-title">{{ listing.name }}</h5>
+                    <p class="card-text">{{ listing.description }}</p>
+                    <p class="card-text">Current Bid / Price: ${{ listing.price }}</p>
+                    <a href="{% url 'view_listing' id=listing.id %}" class="btn btn-primary">View More</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
