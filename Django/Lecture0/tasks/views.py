@@ -6,6 +6,7 @@ from django import forms
 ## VARIABLES ##
 class NewTaskForm(forms.Form):
     task = forms.CharField(label="New Task ")
+
     
 ## VIEWS ##
 def index(request):

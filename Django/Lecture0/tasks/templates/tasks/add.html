@@ -1,5 +1,9 @@
 {% extends "tasks/layout.html" %}
 
+{% block head %}
+    <title>Add a task.</title>
+{% endblock %}
+
 {% block body %}
     <h1>Add a new task:</h1>
     <form action="{% url 'tasks:add' %}" method="post">
