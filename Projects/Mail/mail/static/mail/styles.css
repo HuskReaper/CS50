@@ -1,0 +1,14 @@
+textarea {
+    min-height: 400px;
+}
+
+.row {
+    margin-bottom: 5px;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#detailed-view p {
+    color: grey;
+}
