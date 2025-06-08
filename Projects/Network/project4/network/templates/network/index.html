@@ -1,0 +1,68 @@
+{% extends "network/layout.html" %} {% block body %}
+
+<!-- NEW POST FORM -->
+{% if user.is_authenticated %}
+<form action="{% url 'new_post' %}" id="compose_post" class="form-control" method="POST">
+  {% csrf_token %}
+  <textarea style="margin-bottom: 3px" name="content" id="post-body" class="form-control" placeholder="Start typing your new post..."></textarea>
+  <input type="submit" class="btn btn-primary" />
+</form>
+{% endif %}
+
+<!-- MAIN POSTS CONTAINER -->
+{% if page_obj %}
+<div id="posts-container">
+  <!-- POSTS -->
+  {% for post in page_obj %}
+  <div class="post-container" data-postID="{{ post.id }}">
+    <div class="d-flex align-items-center - justify-content-betweem">
+      <a class="user_hyperlink me-2" href="{% url 'profile' post.author %}"><strong>@{{ post.author }}</strong></a>
+      {% if user.is_authenticated and post.author != user %}
+      <button class="follow-button btn btn-primary btn-sm py-0 px-2 ms-2" data-author="{{ post.author }}" onclick="toggle_follow(this)">
+        Follow
+      </button>
+      {% endif %}
+    </div>
+
+    <p class="post-content">{{ post.content }}</p>
+    <p class="timestamp">{{ post.timestamp }}</p>
+
+    <button
+      class="like-button btn {% if post.liked %}bi-hand-thumbs-up-fill btn-secondary{% else %}bi-hand-thumbs-up btn-primary{% endif %}"
+      onclick="toggle_like(this)"
+    >
+      {{ post.like_count }}
+    </button>
+
+    {% if user.is_authenticated and post.author == user %}
+    <button class="edit-button btn btn-primary" onclick="edit_post(this)">Edit</button>
+    <button class="delete-button btn btn-danger" onclick="delete_post(this)">Delete</button>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- PAGINATION SYSTEM -->
+<nav class="d-flex justify-content-center">
+  <ul class="pagination">
+    <li class="page-item">
+      <a
+        class="page-link {% if not page_obj.has_previous %}disabled{% endif %}"
+        href="?page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}"
+        tabindex="-1"
+        >Previous</a
+      >
+    </li>
+    <li class="page-item"><a class="page-link">{{ page_obj }}</a></li>
+    <li class="page-item">
+      <a
+        class="page-link {% if not page_obj.has_next %}disabled{% endif %}"
+        href="?page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}"
+        >Next</a
+      >
+    </li>
+  </ul>
+</nav>
+
+{% endblock %}

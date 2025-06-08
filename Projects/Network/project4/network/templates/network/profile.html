@@ -1,0 +1,40 @@
+{% extends "network/layout.html" %} {% block body %} {% if user %}
+<div>
+  <h1>{{user.username}}</h1>
+  <p>Followers: {{ followers }}</p>
+  <p>Following: {{ following }}</p>
+  {% if request.user.is_authenticated and request.user != user%}
+  <button class="btn btn-primary" data-author="{{ user.username }}" onclick="toggle_follow(this)">Follow</button>
+  {% endif %}
+</div>
+{% endif %} {% if page_obj %}
+<div id="posts-container">
+  {% for post in page_obj %}
+  <div class="post-container" data-postID="{{ post.id }}">
+    <div class="d-flex align-items-center - justify-content-betweem">
+      <a class="user_hyperlink me-2" href="{% url 'profile' post.author %}"><strong>@{{ post.author }}</strong></a>
+      {% if user.is_authenticated and post.author != user %}
+      <button class="follow-button btn btn-primary btn-sm py-0 px-2 ms-2" data-author="{{ post.author }}" onclick="toggle_follow(this)">
+        Follow
+      </button>
+      {% endif %}
+    </div>
+
+    <p class="post-content">{{ post.content }}</p>
+    <p class="timestamp">{{ post.timestamp }}</p>
+
+    <button
+      class="like-button btn {% if post.liked %}bi-hand-thumbs-up-fill btn-secondary{% else %}bi-hand-thumbs-up btn-primary{% endif %}"
+      onclick="toggle_like(this)"
+    >
+      {{ post.like_count }}
+    </button>
+
+    {% if user.is_authenticated and post.author == user %}
+    <button class="edit-button btn btn-primary" onclick="edit_post(this)">Edit</button>
+    <button class="delete-button btn btn-danger" onclick="delete_post(this)">Delete</button>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endif %} {% endblock %}
